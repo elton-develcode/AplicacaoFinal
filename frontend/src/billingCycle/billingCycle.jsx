@@ -12,7 +12,7 @@ import TabContent from '../common/tab/tabContent'
 import { selectTab, showTabs } from '../common/tab/tabAction'
 import List from '../billingCycle/billingCycleList'
 import Form from './billingCycleForm'
-import { create } from './billingCycleActions'
+import { create, update, remove } from './billingCycleActions'
 
 class BillingCycle extends Component {
 
@@ -31,19 +31,24 @@ componentWillMount(){
                 <TabHeader label='Listar' icon='bars' target='tabList' />
                 <TabHeader label='Incluir' icon='plus' target='tabCreate' />
                 <TabHeader label='Alterar' icon='pencil' target='tabUpdate' />
-                <TabHeader label='Incluir' icon='trash-o' target='tabDelete' />
+                <TabHeader label='Deletar' icon='trash-o' target='tabDelete' />
               </TabsHeader>
               <TabsContent>
                 <TabContent id='tabList'>
                   <List />
                 </TabContent>
                 <TabContent id='tabCreate'>
-                  <Form onSubmit={this.props.create}/>
+                <Form onSubmit={this.props.create}
+                  submitLabel='Incluir' submitClass='primary'/>
                 </TabContent>
                 <TabContent id='tabUpdate'>
-                  <Form />
+                <Form onSubmit={this.props.update}
+                  submitLabel='Alterar' submitClass='info'/>
                 </TabContent>
-                <TabContent id='tabDelete'><h1>Deletar</h1></TabContent>
+              <TabContent id='tabDelete'>
+                <Form onSubmit={this.props.remove} readOnly={true}
+                  submitLabel='Excluir' submitClass='danger'/>
+                </TabContent>
               </TabsContent>
             </Tabs>
           </Content>
@@ -53,6 +58,6 @@ componentWillMount(){
 }
 
 const mapDispatchToProps = dispacth => bindActionCreators({
-  selectTab, showTabs, create
+  selectTab, showTabs, create, update, remove
 }, dispacth)
 export default connect(null,mapDispatchToProps)(BillingCycle)
